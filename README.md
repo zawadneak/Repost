@@ -41,7 +41,7 @@ In this project the following technologies and libraries were used:
 - [**React Native Vector Icons**](https://github.com/oblador/react-native-vector-icons)
 - [**React Native Linear Gradient**](https://github.com/react-native-community/react-native-linear-gradient)
 - [**React Native Share**](https://github.com/react-native-community/react-native-share)
-- [**RN Fecth Blob**](https://www.npmjs.com/package/rn-fetch-blob/v/0.10.13)
+- [**RN Fetch Blob**](https://www.npmjs.com/package/rn-fetch-blob/v/0.10.13)
 - [**Styled Components**](https://styled-components.com/)
 - [**Axios**](https://github.com/axios/axios)
 - [**Prop Types**](https://www.npmjs.com/package/prop-types)
