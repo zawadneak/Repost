@@ -29,7 +29,7 @@ This small project is a simple version of an app to repost Instagram posts! Ther
 ----------------------
 
 <h3 align="center">
-    <img alt="App" src="https://i.imgur.com/Zf2TNqi.gif" />
+    <img alt="App" height="800" src="./.github/app.gif" />
 </h3>
 
 :wrench: Technologies used
