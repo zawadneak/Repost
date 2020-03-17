@@ -94,7 +94,7 @@ export default function Home({ navigation }) {
         <Holder>
           <Title>How to repost</Title>
           <Box>
-            <InstaLabel onPress={() => Linking.openURL('instagram://app')}>
+            <InstaLabel onPress={() => Linking.openURL('instagram://user')}>
               1. Open Instagram
             </InstaLabel>
             <Label>

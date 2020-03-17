@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-
+import PropTypes from 'prop-types';
+import RNFetchBlob from 'rn-fetch-blob';
 import Share from 'react-native-share';
 
 import {
@@ -15,27 +16,43 @@ import {
 
 export default function Repost({ route }) {
   const { posts } = route.params;
+  const [imagePath, setPath] = useState(null);
+  const [filename, setFilename] = useState(null);
 
-  const handleShare = () => {
-    const shareOptions = {
-      message: 'some message',
-      url: posts.image,
-      social: Share.Social.INSTAGRAM_STORIES,
-      stickerImage: `data:link,${posts.image}`,
-    };
-    Share.open(shareOptions);
-  };
+  useEffect(() => {
+    async function downloadImage() {
+      await RNFetchBlob.config({
+        appendExt: 'jpg',
+      })
+        .fetch('GET', posts.image, {})
+        .then(res => {
+          setPath(res.base64());
+        });
+    }
+
+    downloadImage();
+  }, []);
 
   const repostDescription = `#REPOST @${posts.author} \n\n${posts.description}`;
+
+  const handleShare = () => {
+    const options = {
+      url: `data:image/jpg;base64,${imagePath}`,
+      message: repostDescription,
+      title: 'test',
+      type: 'image/*',
+      filename: 'image.jpg',
+      social: Share.Social.INSTAGRAM,
+      instagramCaption: 'for insta',
+    };
+
+    Share.shareSingle(options);
+  };
 
   return (
     <Container>
       <Box>
-        <Picture
-          source={{
-            uri: posts.image,
-          }}
-        />
+        <Picture source={{ uri: `data:image/*;base64,${imagePath}` }} />
         <Description>{repostDescription}</Description>
         <RepostButton onPress={handleShare}>
           <Gradient>
@@ -47,3 +64,7 @@ export default function Repost({ route }) {
     </Container>
   );
 }
+
+Repost.propTypes = {
+  route: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
+};
