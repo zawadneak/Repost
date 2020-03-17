@@ -38,7 +38,6 @@ In this project the following technologies and libraries were used:
 
 - [**ReactNative**](https://reactnative.dev/?source=post_page-----3c2e6f4b2999----------------------)
 - [**React Navigation**](https://reactnavigation.org/)
-- [**React Native Camera**](https://github.com/react-native-community/react-native-camera)
 - [**React Native Vector Icons**](https://github.com/oblador/react-native-vector-icons)
 - [**React Native Linear Gradient**](https://github.com/react-native-community/react-native-linear-gradient)
 - [**React Native Share**](https://github.com/react-native-community/react-native-share)
