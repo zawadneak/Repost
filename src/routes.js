@@ -26,7 +26,7 @@ export default function Routes() {
           title: 'Repost',
           headerRight: () => (
             <TouchableOpacity
-              onPress={() => Linking.openURL('instagram://app')}
+              onPress={() => Linking.openURL('instagram://user')}
               style={{ marginRight: 30 }}
             >
               <Icon name="instagram" color="#fff" size={25} />
