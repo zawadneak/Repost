@@ -15,16 +15,14 @@ import {
 } from './styles';
 
 export default function Repost({ route }) {
-  const { posts } = route.params;
+  const { post } = route.params;
   const [imagePath, setPath] = useState(null);
-  const [filename, setFilename] = useState(null);
-
   useEffect(() => {
     async function downloadImage() {
       await RNFetchBlob.config({
         appendExt: 'jpg',
       })
-        .fetch('GET', posts.image, {})
+        .fetch('GET', post.image, {})
         .then(res => {
           setPath(res.base64());
         });
@@ -33,7 +31,7 @@ export default function Repost({ route }) {
     downloadImage();
   }, []);
 
-  const repostDescription = `#REPOST @${posts.author} \n\n${posts.description}`;
+  const repostDescription = `#REPOST @${post.author} \n\n${post.description}`;
 
   const handleShare = () => {
     const options = {

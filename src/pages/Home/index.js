@@ -1,25 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import {
   StatusBar,
-  Linking,
   Clipboard,
   ActivityIndicator,
   AppState,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PropTypes from 'prop-types';
 import api from '../../services/api';
+import Tutorial from '../../components/Tutorial/index';
 
 import {
   Container,
-  Holder,
-  Title,
-  Box,
-  InstaLabel,
-  Label,
-  TutorialImage,
-  RepostLabel,
   Wrapper,
+  List,
   Post,
   PostImage,
   TextHolder,
@@ -27,11 +20,8 @@ import {
   Description,
 } from './styles';
 
-import tutorial from '../../assets/img/tutorial.png';
-
 export default function Home({ navigation }) {
   const [instaURL, setURL] = useState(null);
-  const [noLinks, setLinks] = useState(true);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -45,8 +35,12 @@ export default function Home({ navigation }) {
         author: author_name,
         image: thumbnail_url,
       };
-      setPosts(postData);
-      setLinks(false);
+      const findIndex = posts.findIndex(item => item.image === postData.image);
+      if (findIndex >= 0) {
+        setLoading(false);
+        return 1;
+      }
+      setPosts([...posts, postData]);
       setLoading(false);
 
       return 1;
@@ -82,43 +76,37 @@ export default function Home({ navigation }) {
     };
   }, []);
 
-  const handleNavigation = () => {
-    navigation.navigate('Repost', { posts });
-  };
-
   return (
     <Container>
       <StatusBar backgroundColor="#444" barStyle="light-content" />
       {loading ? <ActivityIndicator style={{ marginTop: 10 }} /> : null}
-      {noLinks ? (
-        <Holder>
-          <Title>How to repost</Title>
-          <Box>
-            <InstaLabel onPress={() => Linking.openURL('instagram://user')}>
-              1. Open Instagram
-            </InstaLabel>
-            <Label>
-              {'2. Click '}
-              <Icon name="dots-horizontal" size={20} />
-            </Label>
-            <TutorialImage source={tutorial} />
-            <Label>3. Choose Copy Link</Label>
-            <RepostLabel>4. Open Repost</RepostLabel>
-          </Box>
-        </Holder>
+      {posts.length === 0 ? (
+        <Tutorial />
       ) : (
         <Wrapper loading={loading}>
-          <Post onPress={handleNavigation}>
-            <PostImage
-              source={{
-                uri: posts.image,
-              }}
-            />
-            <TextHolder>
-              <User>{posts.author}</User>
-              <Description numberOfLines={3}>{posts.description}</Description>
-            </TextHolder>
-          </Post>
+          <List
+            data={posts}
+            keyExtractor={item => item.image}
+            renderItem={({ item }) => (
+              <Post
+                onPress={() => {
+                  navigation.navigate('Repost', { post: item });
+                }}
+              >
+                <PostImage
+                  source={{
+                    uri: item.image,
+                  }}
+                />
+                <TextHolder>
+                  <User>{item.author}</User>
+                  <Description numberOfLines={3}>
+                    {item.description}
+                  </Description>
+                </TextHolder>
+              </Post>
+            )}
+          />
         </Wrapper>
       )}
     </Container>

@@ -8,7 +8,7 @@ export const Container = styled.ScrollView`
 `;
 
 export const Box = styled.View`
-  margin: 10px 0px;
+  margin: 20px 0px;
   align-self: stretch;
   background-color: #444;
   border-radius: 15px;
@@ -21,6 +21,7 @@ export const Picture = styled.Image`
   border-radius: 10px;
   resize-mode: cover;
   margin: 0 auto;
+  margin-top: 10px;
 `;
 
 export const Description = styled.Text`
